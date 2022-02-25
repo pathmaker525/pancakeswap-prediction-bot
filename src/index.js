@@ -36,6 +36,7 @@ const pcsPredictionContract = new Contract(ADDRESSES.PCSPV2.ADDRESS, PCSPredicti
 console.log(
   chalk.blackBright(`
     Starting...
+    Betting Enabled: ${enableBet}
     Amount to Bet: ${CUSTOM_SETTING.BET_AMOUNT} BNB
     Waiting for new rounds... up to 5 min, please wait...`)
 )
@@ -94,13 +95,18 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
   if (enableBet) {
     if (decision !== true) {
       try {
+        console.log(
+          chalk.whiteBright(`
+            ${chalk.red("Bear Bet")} transaction Preparing!`)
+        )
+
         const tx = await predictionContract.betBear(epoch, {
           value: parseEther(CUSTOM_SETTING.BET_AMOUNT),
         })
 
         console.log(
           chalk.whiteBright(`
-        ${chalk.red("Bear Bet")} transaction Submitted!`)
+            ${chalk.red("Bear Bet")} transaction Submitted!`)
         )
 
         await tx.wait()
@@ -110,18 +116,23 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
         console.error(
           chalk.red(`
             ${chalk.red("Bear Bet")} transaction failed
-            Reason: ${error.data.message}`)
+            Reason: ${error.message}`)
         )
       }
     } else {
       try {
+        console.log(
+          chalk.whiteBright(`
+          ${chalk.green("Bull Bet")} transaction Preparing!`)
+        )
+
         const tx = await predictionContract.betBull(epoch, {
           value: parseEther(CUSTOM_SETTING.BET_AMOUNT),
         })
 
         console.log(
           chalk.whiteBright(`
-        ${chalk.green("Bull Bet")} transaction Submitted!`)
+          ${chalk.green("Bull Bet")} transaction Submitted!`)
         )
 
         await tx.wait()
@@ -131,7 +142,7 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
         console.error(
           chalk.red(`
             ${chalk.green("Bull Bet")} transaction failed
-            Reason: ${error.data.message}`)
+            Reason: ${error.message}`)
         )
       }
     }
@@ -156,7 +167,7 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
       console.error(
         chalk.red(`
         Claim transaction failed
-        Reason: ${error.data.message}`)
+        Reason: ${error.message}`)
       )
     }
   }
