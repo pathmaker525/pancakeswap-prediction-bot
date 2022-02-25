@@ -4,6 +4,7 @@
   "description": "node.js bot to win prise from pancakeswap prediction",
   "main": "/src/index.js",
   "scripts": {
+    "start": "nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,9 +23,10 @@
   },
   "homepage": "https://github.com/CoryITpro/pancakeswap-prediction-bot#readme",
   "dependencies": {
-    "chalk": "^5.0.0",
+    "chalk": "^4.1.0",
     "dotenv": "^16.0.0",
     "ethers": "^5.5.4",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1"
   }
 }
