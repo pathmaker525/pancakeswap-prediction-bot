@@ -17,10 +17,8 @@ const CUSTOM_SETTING = {
   RPC_URL: "https://bsc-dataseed.binance.org/", // Default RPC URL
   // RPC_URL: "https://data-seed-prebsc-1-s1.binance.org:8545/", // Default RPC URL
   BET_AMOUNT: "0.01", // in BNB
-  PREPARATION_TIME: 5, // Waiting for 270sec = 4min 30sec
+  PREPARATION_TIME: 8, // Waiting for 270sec = 4min 30sec
   PRIVATE_KEY: process.env.PRIVATE_KEY, // Wallet private key
-  GAS_PRICE: "300000",
-  GAS_LIMIT: "500000",
 }
 
 module.exports = { CGPredictionV3Abi, PCSPredictionV2Abi, ADDRESSES, CUSTOM_SETTING }

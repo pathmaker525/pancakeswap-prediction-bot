@@ -98,10 +98,6 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
 
         const tx = await pcsPredictionContract.betBear(epoch, {
           value: parseEther(CUSTOM_SETTING.BET_AMOUNT),
-          gasPrice: parseUnits(CUSTOM_SETTING.GAS_PRICE, "wei"),
-          gasLimit: parseUnits(CUSTOM_SETTING.GAS_LIMIT, "wei"),
-          // gasPrice: parseUnits(CUSTOM_SETTING.GAS_PRICE, "gwei"),
-          // gasLimit: parseUnits(CUSTOM_SETTING.GAS_LIMIT, "gwei"),
         })
 
         console.log(
@@ -116,7 +112,7 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
         console.error(
           chalk.red(`
             ${chalk.red("Bear Bet")} transaction failed
-            Reason: ${error.message}`)
+            Reason: ${error}`)
         )
       }
     } else {
@@ -128,10 +124,6 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
 
         const tx = await pcsPredictionContract.betBull(epoch, {
           value: parseEther(CUSTOM_SETTING.BET_AMOUNT),
-          gasPrice: parseUnits(CUSTOM_SETTING.GAS_PRICE, "wei"),
-          gasLimit: parseUnits(CUSTOM_SETTING.GAS_LIMIT, "wei"),
-          // gasPrice: parseUnits(CUSTOM_SETTING.GAS_PRICE, "gwei"),
-          // gasLimit: parseUnits(CUSTOM_SETTING.GAS_LIMIT, "gwei"),
         })
 
         console.log(
@@ -146,7 +138,7 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
         console.error(
           chalk.red(`
             ${chalk.green("Bull Bet")} transaction failed
-            Reason: ${error.message}`)
+            Reason: ${error}`)
         )
       }
     }
