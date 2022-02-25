@@ -19,8 +19,8 @@ const CUSTOM_SETTING = {
   BET_AMOUNT: "0.01", // in BNB
   PREPARATION_TIME: 5, // Waiting for 270sec = 4min 30sec
   PRIVATE_KEY: process.env.PRIVATE_KEY, // Wallet private key
-  GAS_PRICE: "10",
-  GAS_LIMIT: "12",
+  GAS_PRICE: "300000",
+  GAS_LIMIT: "500000",
 }
 
 module.exports = { CGPredictionV3Abi, PCSPredictionV2Abi, ADDRESSES, CUSTOM_SETTING }
