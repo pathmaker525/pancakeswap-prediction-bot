@@ -3,41 +3,13 @@ const { formatEther, parseEther, parseUnits } = require("ethers/lib/utils")
 const chalk = require("chalk")
 
 const { sleep, isBullOrBear, calculateTaxAmount, getClaimableEpoches } = require("./utils/index")
-
 const { ADDRESSES, PCSPredictionV2Abi, CUSTOM_SETTING } = require("./configs/index")
+const asciiArt = require("./configs/ascii-art")
 
 const { JsonRpcProvider } = providers
 
 console.clear()
-console.log(
-  chalk.green(`
-
-    .*""""""""""""""""""""""*.
-   :                          ;
-   :                          ;       ██████╗  ██████╗███████╗    ██████╗     ██████╗  ██████╗ ████████╗
-   :  ......................  ;       ██╔══██╗██╔════╝██╔════╝    ██╔══██╗    ██╔══██╗██╔═══██╗╚══██╔══╝
-   : :                      ; ;       ██████╔╝██║     ███████╗    ██████╔╝    ██████╔╝██║   ██║   ██║   
-   :_:                      ;_;       ██╔═══╝ ██║     ╚════██║    ██╔═══╝     ██╔══██╗██║   ██║   ██║   
-  /  :  __...--------...__  ;  \\      ██║     ╚██████╗███████║    ██║██╗      ██████╔╝╚██████╔╝   ██║   
- /   :"'  .*"*-.  .-*"*.  '";   \\     ╚═╝      ╚═════╝╚══════╝    ╚═╝╚═╝      ╚═════╝  ╚═════╝    ╚═╝   
-:    ;   /      ;:      \\   :    ;     
-!    !  ;    *  !!  *    :  !    !
-;   ;   :     .'  '.     ;   ;   :
-:  .'    '-.-'      '-.-'    '.  ;
-'-"\                          /"-'
-    '.                      .'    
-      *,      '-__-'      ,*
-      /.'-_            _-' .\\
-     /  "-_"*-.____.-*" _-"  \\
-    /      '-_  /'\\  _-'      \\
-   :    :   __'" | "'__   ;    ;
-   |.--.;  |\\/|  |  |\\/|  :.--.|
-   (   ()  |__|  |  |__|  ()   )
-    '--^_        |        _^--'
-       | "'*--.._I_..--*'" |
-       | __..._  | _..._   |
-      .'"      '"'"     ''"'.`)
-)
+console.log(chalk.green(asciiArt))
 
 if (CUSTOM_SETTING.PRIVATE_KEY === "") {
   console.log(
@@ -126,8 +98,8 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
 
         const tx = await pcsPredictionContract.betBear(epoch, {
           value: parseEther(CUSTOM_SETTING.BET_AMOUNT),
-          gasPrice: CUSTOM_SETTING.GAS_PRICE,
-          gasLimit: CUSTOM_SETTING.GAS_LIMIT,
+          gasPrice: parseUnits(CUSTOM_SETTING.GAS_PRICE, "wei"),
+          gasLimit: parseUnits(CUSTOM_SETTING.GAS_LIMIT, "wei"),
           // gasPrice: parseUnits(CUSTOM_SETTING.GAS_PRICE, "gwei"),
           // gasLimit: parseUnits(CUSTOM_SETTING.GAS_LIMIT, "gwei"),
         })
@@ -156,8 +128,8 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
 
         const tx = await pcsPredictionContract.betBull(epoch, {
           value: parseEther(CUSTOM_SETTING.BET_AMOUNT),
-          gasPrice: CUSTOM_SETTING.GAS_PRICE,
-          gasLimit: CUSTOM_SETTING.GAS_LIMIT,
+          gasPrice: parseUnits(CUSTOM_SETTING.GAS_PRICE, "wei"),
+          gasLimit: parseUnits(CUSTOM_SETTING.GAS_LIMIT, "wei"),
           // gasPrice: parseUnits(CUSTOM_SETTING.GAS_PRICE, "gwei"),
           // gasLimit: parseUnits(CUSTOM_SETTING.GAS_LIMIT, "gwei"),
         })
