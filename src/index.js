@@ -75,16 +75,16 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
       Bear Amount: ${formatEther(bearAmount)} BNB`)
   )
 
-  const { isSimilar, decision } = isBullOrBear(bullAmount, bearAmount)
+  const decision = isBullOrBear(bullAmount, bearAmount)
 
-  if (isSimilar) {
-    console.log(
-      chalk.redBright(`
-      >>> Skip current Epoch`)
-    )
+  // if (isSimilar) {
+  //   console.log(
+  //     chalk.redBright(`
+  //     >>> Skip current Epoch`)
+  //   )
 
-    return
-  }
+  //   return
+  // }
 
   console.log(
     chalk.blue(`

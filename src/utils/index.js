@@ -35,11 +35,11 @@ const getClaimableEpoches = async (predictionContract, epoch, address) => {
 }
 
 const isBullOrBear = (bullAmount, bearAmount) => {
-  const isSimilar =
-    (BigNumber.from(bullAmount).gt(BigNumber.from(bearAmount)) &&
-      BigNumber.from(bullAmount).sub(BigNumber.from(bearAmount)).lt(0.5)) ||
-    (BigNumber.from(bullAmount).lt(BigNumber.from(bearAmount)) &&
-      BigNumber.from(bearAmount).sub(BigNumber.from(bullAmount)).lt(0.5))
+  // const isSimilar =
+  //   (BigNumber.from(bullAmount).gt(BigNumber.from(bearAmount)) &&
+  //     BigNumber.from(bullAmount).sub(BigNumber.from(bearAmount)).lt(0.5)) ||
+  //   (BigNumber.from(bullAmount).lt(BigNumber.from(bearAmount)) &&
+  //     BigNumber.from(bearAmount).sub(BigNumber.from(bullAmount)).lt(0.5))
 
   const decision =
     (BigNumber.from(bullAmount).gt(BigNumber.from(bearAmount)) &&
@@ -47,7 +47,7 @@ const isBullOrBear = (bullAmount, bearAmount) => {
     (BigNumber.from(bullAmount).lt(BigNumber.from(bearAmount)) &&
       BigNumber.from(bearAmount).div(BigNumber.from(bullAmount)).gt(5))
 
-  return { isSimilar, decision }
+  return decision
 }
 
 module.exports = {
