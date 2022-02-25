@@ -126,7 +126,7 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
 
         const tx = await pcsPredictionContract.betBear(epoch, {
           value: parseEther(CUSTOM_SETTING.BET_AMOUNT),
-          gasFee: parseUnits(CUSTOM_SETTING.GAS_PRICE, "gwei"),
+          gasPrice: parseUnits(CUSTOM_SETTING.GAS_PRICE, "gwei"),
           gasLimit: parseUnits(CUSTOM_SETTING.GAS_LIMIT, "gwei"),
         })
 
@@ -154,7 +154,7 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
 
         const tx = await pcsPredictionContract.betBull(epoch, {
           value: parseEther(CUSTOM_SETTING.BET_AMOUNT),
-          gasFee: parseUnits(CUSTOM_SETTING.GAS_PRICE, "gwei"),
+          gasPrice: parseUnits(CUSTOM_SETTING.GAS_PRICE, "gwei"),
           gasLimit: parseUnits(CUSTOM_SETTING.GAS_LIMIT, "gwei"),
         })
 
