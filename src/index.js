@@ -1,5 +1,5 @@
-const { BigNumber, Wallet, providers, Contract } = require("ethers")
-const { formatEther, parseEther } = require("ethers/lib/utils")
+const { Wallet, providers, Contract } = require("ethers")
+const { formatEther, parseEther, parseUnits } = require("ethers/lib/utils")
 const chalk = require("chalk")
 
 const { sleep, isBullOrBear, calculateTaxAmount, getClaimableEpoches } = require("./utils/index")
@@ -11,8 +11,32 @@ const { JsonRpcProvider } = providers
 console.clear()
 console.log(
   chalk.green(`
-  ------------------------------
-    *** PCS Prediction BOT ***`)
+
+    .*""""""""""""""""""""""*.
+   :                          ;
+   :                          ;       ██████╗  ██████╗███████╗    ██████╗     ██████╗  ██████╗ ████████╗
+   :  ......................  ;       ██╔══██╗██╔════╝██╔════╝    ██╔══██╗    ██╔══██╗██╔═══██╗╚══██╔══╝
+   : :                      ; ;       ██████╔╝██║     ███████╗    ██████╔╝    ██████╔╝██║   ██║   ██║   
+   :_:                      ;_;       ██╔═══╝ ██║     ╚════██║    ██╔═══╝     ██╔══██╗██║   ██║   ██║   
+  /  :  __...--------...__  ;  \\      ██║     ╚██████╗███████║    ██║██╗      ██████╔╝╚██████╔╝   ██║   
+ /   :"'  .*"*-.  .-*"*.  '";   \\     ╚═╝      ╚═════╝╚══════╝    ╚═╝╚═╝      ╚═════╝  ╚═════╝    ╚═╝   
+:    ;   /      ;:      \\   :    ;     
+!    !  ;    *  !!  *    :  !    !
+;   ;   :     .'  '.     ;   ;   :
+:  .'    '-.-'      '-.-'    '.  ;
+'-"\                          /"-'
+    '.                      .'    
+      *,      '-__-'      ,*
+      /.'-_            _-' .\\
+     /  "-_"*-.____.-*" _-"  \\
+    /      '-_  /'\\  _-'      \\
+   :    :   __'" | "'__   ;    ;
+   |.--.;  |\\/|  |  |\\/|  :.--.|
+   (   ()  |__|  |  |__|  ()   )
+    '--^_        |        _^--'
+       | "'*--.._I_..--*'" |
+       | __..._  | _..._   |
+      .'"      '"'"     ''"'.`)
 )
 
 if (CUSTOM_SETTING.PRIVATE_KEY === "") {
@@ -100,8 +124,10 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
             ${chalk.red("Bear Bet")} transaction Preparing!`)
         )
 
-        const tx = await predictionContract.betBear(epoch, {
+        const tx = await pcsPredictionContract.betBear(epoch, {
           value: parseEther(CUSTOM_SETTING.BET_AMOUNT),
+          gasFee: parseUnits(CUSTOM_SETTING.GAS_PRICE, "gwei"),
+          gasLimit: CUSTOM_SETTING.GAS_LIMIT,
         })
 
         console.log(
@@ -123,16 +149,18 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
       try {
         console.log(
           chalk.whiteBright(`
-          ${chalk.green("Bull Bet")} transaction Preparing!`)
+            ${chalk.green("Bull Bet")} transaction Preparing!`)
         )
 
-        const tx = await predictionContract.betBull(epoch, {
+        const tx = await pcsPredictionContract.betBull(epoch, {
           value: parseEther(CUSTOM_SETTING.BET_AMOUNT),
+          gasFee: parseUnits(CUSTOM_SETTING.GAS_PRICE, "gwei"),
+          gasLimit: CUSTOM_SETTING.GAS_LIMIT,
         })
 
         console.log(
           chalk.whiteBright(`
-          ${chalk.green("Bull Bet")} transaction Submitted!`)
+            ${chalk.green("Bull Bet")} transaction Submitted!`)
         )
 
         await tx.wait()
