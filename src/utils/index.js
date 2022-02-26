@@ -34,6 +34,14 @@ const getClaimableEpoches = async (predictionContract, epoch, address) => {
   }
 }
 
+const reduceOnHoldTimeByOneBlock = (onHoldTime) => {
+  if (onHoldTime <= 3000) {
+    return onHoldTime
+  }
+
+  return onHoldTime - 3000
+}
+
 const isBullOrBear = (bullAmount, bearAmount) => {
   // const isSimilar =
   //   (BigNumber.from(bullAmount).gt(BigNumber.from(bearAmount)) &&
@@ -54,5 +62,6 @@ module.exports = {
   sleep,
   isBullOrBear,
   calculateTaxAmount,
+  reduceOnHoldTimeByOneBlock,
   getClaimableEpoches,
 }

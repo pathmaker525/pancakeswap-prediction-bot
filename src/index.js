@@ -2,7 +2,13 @@ const { Wallet, providers, Contract } = require("ethers")
 const { formatEther, parseEther, parseUnits } = require("ethers/lib/utils")
 const chalk = require("chalk")
 
-const { sleep, isBullOrBear, calculateTaxAmount, getClaimableEpoches } = require("./utils/index")
+const {
+  sleep,
+  isBullOrBear,
+  calculateTaxAmount,
+  reduceOnHoldTimeByOneBlock,
+  getClaimableEpoches,
+} = require("./utils/index")
 const { ADDRESSES, PCSPredictionV2Abi, CUSTOM_SETTING } = require("./configs/index")
 const asciiArt = require("./configs/ascii-art")
 
@@ -85,11 +91,11 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
 
   console.log(
     chalk.blue(`
-      Betting on ${decision !== true ? chalk.red("Bear Bet") : chalk.green("Bull Bet")}`)
+      Betting on ${decision === true ? chalk.red("Bear Bet") : chalk.green("Bull Bet")}`)
   )
 
   if (enableBet) {
-    if (decision !== true) {
+    if (decision === true) {
       try {
         console.log(
           chalk.whiteBright(`
@@ -107,13 +113,18 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
 
         await tx.wait()
 
-        console.log(chalk.blue(`${chalk.red("Bear Bet")} transaction Success!`))
+        console.log(
+          chalk.blue(`
+            ${chalk.red("Bear Bet")} transaction Success!`)
+        )
       } catch (error) {
         console.error(
           chalk.red(`
             ${chalk.red("Bear Bet")} transaction failed
-            Reason: ${error}`)
+            Reason: ${error.body ? error.body.message : error.message}`)
         )
+
+        CUSTOM_SETTING.ON_HOLD_TIME = reduceOnHoldTimeByOneBlock(CUSTOM_SETTING.ON_HOLD_TIME)
       }
     } else {
       try {
@@ -133,19 +144,24 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
 
         await tx.wait()
 
-        console.log(chalk.blue(`${chalk.green("Bull Bet")} transaction Success!`))
+        console.log(
+          chalk.blue(`
+            ${chalk.green("Bull Bet")} transaction Success!`)
+        )
       } catch (error) {
         console.error(
           chalk.red(`
             ${chalk.green("Bull Bet")} transaction failed
-            Reason: ${error}`)
+            Reason: ${error.body ? error.body.message : error.message}`)
         )
+
+        CUSTOM_SETTING.ON_HOLD_TIME = reduceOnHoldTimeByOneBlock(CUSTOM_SETTING.ON_HOLD_TIME)
       }
     }
   }
 
   const claimables = await claimableEpoches(pcsPredictionContract, epoch, signer.address)
-  if (claimables.length > 2) {
+  if (claimables.length > 0) {
     try {
       const tx = await pcsPredictionContract.claim(claimables)
 
