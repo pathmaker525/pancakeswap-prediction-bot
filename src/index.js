@@ -160,27 +160,32 @@ pcsPredictionContract.on("StartRound", async (epoch) => {
     }
   }
 
-  const claimables = await claimableEpoches(pcsPredictionContract, epoch, signer.address)
-  if (claimables.length > 0) {
-    try {
-      const tx = await pcsPredictionContract.claim(claimables)
+  // const claimables = await claimableEpoches(pcsPredictionContract, epoch, signer.address)
+  // if (claimables.length > 0) {
+  //   try {
+  //     console.log(
+  //       chalk.blue(`
+  //         Claim transaction preparing`)
+  //     )
 
-      console.log(
-        chalk.blue(`
-        Claim transaction submitted`)
-      )
+  //     const tx = await pcsPredictionContract.claim(claimables)
 
-      await tx.wait()
-      console.log(
-        chalk.green(`
-        Reward Claimed`)
-      )
-    } catch (error) {
-      console.error(
-        chalk.red(`
-        Claim transaction failed
-        Reason: ${error.message}`)
-      )
-    }
-  }
+  //     console.log(
+  //       chalk.blue(`
+  //         Claim transaction submitted`)
+  //     )
+
+  //     await tx.wait()
+  //     console.log(
+  //       chalk.green(`
+  //         Reward Claimed`)
+  //     )
+  //   } catch (error) {
+  //     console.error(
+  //       chalk.red(`
+  //         Claim transaction failed
+  //         Reason: ${error}`)
+  //     )
+  //   }
+  // }
 })
